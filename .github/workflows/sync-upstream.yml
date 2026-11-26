@@ -1,0 +1,27 @@
+name: Sync Upstream Kimentanm/aptv
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: master
+
+      - name: Sync upstream
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.1
+        with:
+          upstream_repository: Kimentanm/aptv
+          upstream_branch: master
+          target_branch: master
+          target_sync_branch: master
+          sync_mode: fast-forward
